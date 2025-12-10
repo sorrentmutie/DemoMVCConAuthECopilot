@@ -8,11 +8,31 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include=".github\chatmodes\architect.chatmode.md" />
+    <None Include=".github\chatmodes\engineer.chatmode.md" />
+    <None Include=".github\chatmodes\expert-dotnet-software-engineer.md" />
+    <None Include=".github\chatmodes\mrwolf.chatmode.md" />
+    <None Include=".github\chatmodes\pm.chatmode.md" />
+    <None Include=".github\chatmodes\reviewer.chatmode.md" />
+    <None Include=".github\copilot-instructions.md" />
+    <None Include=".github\instructions\aspnet-rest-apis.instructions.md" />
+    <None Include=".github\instructions\blazor.instructions.md" />
+    <None Include=".github\instructions\csharp.instructions.md" />
+    <None Include=".github\instructions\dotnet-architecture-good-practices.instructions.md" />
+    <None Include=".github\instructions\dotnet-framework.instructions.md" />
+    <None Include=".github\instructions\security-and-owasp.instructions.md" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="10.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="10.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include=".github\workflows\" />
   </ItemGroup>
 
 </Project>
