@@ -1,18 +1,37 @@
+
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoMVC.Data.Repositories;
 
-public class CustomerRepository(NorthwindDbContext db) : ICustomerRepository
+public class OrderWithTotalAmount
 {
-    public async Task<IEnumerable<Customer>> GetAllAsync(CancellationToken cancellationToken = default)
-        => await db.Customers.AsNoTracking().ToListAsync(cancellationToken);
-
-    public async Task<Customer?> GetByIdAsync(string customerId, CancellationToken cancellationToken = default)
-        => await db.Customers.AsNoTracking().FirstOrDefaultAsync(c => c.CustomerID == customerId, cancellationToken);
+    public int OrderID { get; set; }
+    public string CustomerID { get; set; } = null!;
+    public DateTime OrderDate { get; set; }
+    public decimal TotalAmount { get; set; }
 }
 
 public class OrderRepository(NorthwindDbContext db) : IOrderRepository
 {
+    public async Task<IEnumerable<OrderWithTotalAmount>> GetByCustomerIdAsync(string customerId, CancellationToken cancellationToken = default)
+    {
+        var orders = await db.Orders
+            .Include(o => o.OrderDetails)
+            .AsNoTracking()
+            .Where(o => o.CustomerID == customerId)
+            .ToListAsync(cancellationToken);
+
+        var result = orders.Select(order => new OrderWithTotalAmount
+        {
+            OrderID = order.OrderID,
+            CustomerID = order.CustomerID,
+            OrderDate = order.OrderDate,
+            TotalAmount = order.OrderDetails.Sum(od => od.UnitPrice * od.Quantity * (1 - (decimal)od.Discount))
+        });
+
+        return result;
+    }
+
     public async Task<IEnumerable<Order>> GetAllAsync(CancellationToken cancellationToken = default)
         => await db.Orders.AsNoTracking().ToListAsync(cancellationToken);
 

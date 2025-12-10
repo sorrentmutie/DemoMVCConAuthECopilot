@@ -1,13 +1,41 @@
-@model DemoMVCConAuthECopilot.Models.CustomerDto
+@model DemoMVCConAuthECopilot.Models.CustomerDetailsViewModel
 @{
     ViewData["Title"] = "Dettaglio Cliente";
 }
 <h2>Dettaglio Cliente</h2>
 <dl class="row">
     <dt class="col-sm-2">ID</dt>
-    <dd class="col-sm-10">@Model.CustomerID</dd>
+    <dd class="col-sm-10">@Model.Customer.CustomerID</dd>
     <dt class="col-sm-2">Nome Azienda</dt>
-    <dd class="col-sm-10">@Model.CompanyName</dd>
-    <!-- Altri campi se necessario -->
+    <dd class="col-sm-10">@Model.Customer.CompanyName</dd>
 </dl>
+
+<h3>Ordini del cliente</h3>
+@if (Model.Orders.Any())
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID Ordine</th>
+                <th>Data</th>
+                <th>Totale</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var order in Model.Orders)
+        {
+            <tr>
+                <td>@order.OrderID</td>
+                <td>@order.OrderDate.ToShortDateString()</td>
+                <td>@order.TotalAmount.ToString("C")</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-info">Nessun ordine trovato per questo cliente.</div>
+}
+
 <a asp-action="Index" class="btn btn-secondary">Torna all'elenco</a>

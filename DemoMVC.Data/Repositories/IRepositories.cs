@@ -1,13 +1,9 @@
 namespace DemoMVC.Data.Repositories;
 
-public interface ICustomerRepository
-{
-    Task<IEnumerable<Customer>> GetAllAsync(CancellationToken cancellationToken = default);
-    Task<Customer?> GetByIdAsync(string customerId, CancellationToken cancellationToken = default);
-}
-
 public interface IOrderRepository
 {
+    Task<IEnumerable<OrderWithTotalAmount>> GetByCustomerIdAsync(string customerId, CancellationToken cancellationToken = default);
+
     Task<IEnumerable<Order>> GetAllAsync(CancellationToken cancellationToken = default);
     Task<Order?> GetByIdAsync(int orderId, CancellationToken cancellationToken = default);
 }
