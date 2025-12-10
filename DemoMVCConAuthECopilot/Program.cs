@@ -10,10 +10,31 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+// NorthwindDbContext e repository (DemoMVC.Data)
+var northwindConnectionString = builder.Configuration.GetConnectionString("NorthwindConnection") ?? throw new InvalidOperationException("Connection string 'Northwind' not found.");
+builder.Services.AddDbContext<DemoMVC.Data.NorthwindDbContext>(options =>
+    options.UseSqlServer(northwindConnectionString));
+builder.Services.AddScoped<DemoMVC.Data.Repositories.ICustomerRepository, DemoMVC.Data.Repositories.CustomerRepository>();
+builder.Services.AddScoped<DemoMVC.Data.Repositories.IOrderRepository, DemoMVC.Data.Repositories.OrderRepository>();
+builder.Services.AddScoped<DemoMVC.Data.Repositories.IProductRepository, DemoMVC.Data.Repositories.ProductRepository>();
+
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+// Consente l'iniezione di IHttpContextAccessor nelle view
+builder.Services.AddHttpContextAccessor();
+
+// Policy per utenti con claim AutoAziendale
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AutoAziendale", policy =>
+        policy.RequireClaim("AutoAziendale"));
+    // Policy per visualizzazione customer solo admin
+    options.AddPolicy("ViewCustomers", policy =>
+        policy.RequireRole("Admin"));
+});
 
 var app = builder.Build();
 

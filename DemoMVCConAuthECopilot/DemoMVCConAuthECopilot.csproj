@@ -35,4 +35,8 @@
     <Folder Include=".github\workflows\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DemoMVC.Data\DemoMVC.Data.csproj" />
+  </ItemGroup>
+
 </Project>

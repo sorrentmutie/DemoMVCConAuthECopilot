@@ -1,0 +1,26 @@
+@model IEnumerable<DemoMVC.Data.Customer>
+@{
+    ViewData["Title"] = "Elenco Clienti";
+}
+<h2>Elenco Clienti</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome Azienda</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var customer in Model)
+    {
+        <tr>
+            <td>@customer.CustomerID</td>
+            <td>@customer.CompanyName</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@customer.CustomerID" class="btn btn-sm btn-primary">Dettagli</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

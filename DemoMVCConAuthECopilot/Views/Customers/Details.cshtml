@@ -1,0 +1,13 @@
+@model DemoMVC.Data.Customer
+@{
+    ViewData["Title"] = "Dettaglio Cliente";
+}
+<h2>Dettaglio Cliente</h2>
+<dl class="row">
+    <dt class="col-sm-2">ID</dt>
+    <dd class="col-sm-10">@Model.CustomerID</dd>
+    <dt class="col-sm-2">Nome Azienda</dt>
+    <dd class="col-sm-10">@Model.CompanyName</dd>
+    <!-- Altri campi se necessario -->
+</dl>
+<a asp-action="Index" class="btn btn-secondary">Torna all'elenco</a>

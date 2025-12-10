@@ -1,0 +1,11 @@
+
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Rimborso Benzina";
+    var autoAziendaleClaim = HttpContextAccessor.HttpContext?.User?.Claims.FirstOrDefault(c => c.Type == "AutoAziendale")?.Value;
+}
+
+<h2>Rimborso Benzina</h2>
+<p>Questa pagina è accessibile solo agli utenti con il claim AutoAziendale.</p>
+
+<p><strong>Valore del claim AutoAziendale:</strong> @autoAziendaleClaim</p>
